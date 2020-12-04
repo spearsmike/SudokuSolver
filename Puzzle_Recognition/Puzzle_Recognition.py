@@ -62,11 +62,11 @@ def writeResultToFile(cells):
 
 def main():
     # cmdline arguments #
-    if len(sys.argv) != 4:
-        sys.exit("Error: incorrect number of arguments.\nFor help use -help")
-
     if sys.argv[1] == "-h" or sys.argv[1] == "-help":
         sys.exit("$ python Puzzle_Recognition image_name.jpg verti_roi horiz_roi")
+
+    if len(sys.argv) != 4:
+        sys.exit("Error: incorrect number of arguments.\nFor help use -help")
 
     file_type = sys.argv[1].split('.')[-1]
     if file_type != "png" and file_type != "jpg":
@@ -107,6 +107,7 @@ def main():
 
     # write puzzle to csv file#
     writeResultToFile(puzzle_cell_numbers)
+
     # final_img = cv2.drawContours(color_img, [boundary], -1, (0, 0, 255), 3)  # draw the puzzle border
     # testing purposes
     #cv2.namedWindow("squares", flags=(cv2.WINDOW_NORMAL + cv2.WINDOW_KEEPRATIO))
