@@ -23,3 +23,10 @@ horiz_roi:
     - value between 0 - .5
     
 The results are stored in csv format in unsolved_puzzle.csv    
+
+
+dependencies installation
+$ sudo apt install python3.8 python3-pip
+$ sudo apt install tesseract-ocr
+$ sudo apt install python3-opencv
+$ sudo pip3 install pytesseract
