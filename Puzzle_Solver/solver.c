@@ -1,6 +1,6 @@
 #include <stddef.h> //size_t
 #include <math.h>   //sqrt
-#include "sudoku.h"
+#include "solver.h"
 
 #define CELLBEGIN(n, index) (size_t)sqrt(n)*(index/(size_t)sqrt(n))
 #define CELLEND(n, index) (size_t)sqrt(n)*(index/(size_t)sqrt(n)+1)

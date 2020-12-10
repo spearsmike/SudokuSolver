@@ -2,7 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <string>
-#include "../sudoku.h"
+#include "../solver.h"
 
 using std::to_string;
 using std::string;
@@ -88,6 +88,6 @@ public:
         int* puzzle;
         size_t n = 16;
         read_puzzle(3, false, puzzle, n);
-        TS_ASSERT(Sudoku(puzzle, n, 0, 0));
+        TS_ASSERT(!Sudoku(puzzle, n, 0, 0));
     }
 };
