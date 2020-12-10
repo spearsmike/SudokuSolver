@@ -1,10 +1,10 @@
 CFLAGS=-c -lm -D SMART
 
-C++: sudoku.c sudoku.h
-	g++ $(CFLAGS) sudoku.c
+C++: solver.c solver.h
+	g++ $(CFLAGS) solver.c
 
-C: sudoku.c sudoku.h
-	gcc $(CFLAGS) -D C sudoku.c
+C: solver.c solver.h
+	gcc $(CFLAGS) -D C solver.c
 
 clean:
-	rm sudoku.o
+	rm solver.o
