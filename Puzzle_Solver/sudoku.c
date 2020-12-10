@@ -89,35 +89,3 @@ bool Sudoku(int* board, size_t n, size_t i, size_t j)
 
     return false;                                //Bad guess or unsolvable
 }
-
-// int main()
-// {
-//     #if N == 9
-//     int board9x9[][9] = 
-//         #include "9x9.txt"
-//     const size_t size = sizeof(board9x9)/sizeof(*board9x9);
-    
-//     if(Sudoku(board9x9, size, 0, 0))
-//         for(int i=0; i<size; i++) {
-//             for(int j=0; j<size; j++)
-//                 printf("%d ", board9x9[i][j]);
-//             printf("\n");
-//         }
-//     else
-//         printf("No solution found.\n");
-//     #elif N == 16
-//     int board16x16[][16] = 
-//         #include "16x16.txt"
-//     int size = sizeof(board16x16)/sizeof(*board16x16);
-//     if(Sudoku(board16x16, size, 0, 0))
-//         for(int i=0; i<size; i++) {
-//             for(int j=0; j<size; j++)
-//                 printf("%d ", board16x16[i][j]);
-//             printf("\n");
-//         }
-//     else
-//         printf("No solution found.\n");
-//     #endif
-
-//     return 0;
-// }
