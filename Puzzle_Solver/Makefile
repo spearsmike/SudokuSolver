@@ -1,4 +1,4 @@
-CFLAGS=-c -lm
+CFLAGS=-c -lm -D SMART
 
 C++: sudoku.c sudoku.h
 	g++ $(CFLAGS) sudoku.c
