@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+*.bak
+*.o
+.*
+*.out
+guide.epub
+guide.pdf
+guide.html
+parsetab.py
+TEST-cxxtest.xml
