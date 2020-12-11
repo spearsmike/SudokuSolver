@@ -7,6 +7,7 @@ image_name.jpg:
     - can be .jpg or .png
 
 roi:
+    default is .7
     -The size of the region of intrest
     -A precentage of the smallest dimension of the image.
     if image is 1920x1080 and roi = .7
@@ -26,3 +27,7 @@ $ sudo apt install python3.8 python3-pip
 $ sudo apt install tesseract-ocr
 $ sudo apt install python3-opencv
 $ sudo pip3 install pytesseract
+
+current issues
+requires puzzle border to be solid with no breaks or lighter areas.
+image keeps getting rotated after perspective transformation
