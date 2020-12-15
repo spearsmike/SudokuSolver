@@ -28,6 +28,16 @@ $ sudo apt install tesseract-ocr
 $ sudo apt install python3-opencv
 $ sudo pip3 install pytesseract
 
-current issues
-requires puzzle border to be solid with no breaks or lighter areas.
-image keeps getting rotated after perspective transformation
+image requirements
+-Puzzle be centered.
+-Puzzle border must be lined up with the cameras box.
+-Minimum of 1920x1080
+
+tests images
+roi = .7
+10.jpg resolution to low.
+11.jpg correct
+12.jpg 2 read errors
+13.jpg could not find puzzle
+14.jpg 3 read errors
+15.jpg 2 read errors

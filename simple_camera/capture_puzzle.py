@@ -2,7 +2,7 @@ import cv2
 import sys
 
 
-roi_ratio = 0.70
+roi_ratio = 1
 if len(sys.argv) != 2:
     sys.exit("missing camera index, try 0,1 or 2\nex. $./capture 0")
 cap = cv2.VideoCapture(int(sys.argv[1]), cv2.CAP_DSHOW)

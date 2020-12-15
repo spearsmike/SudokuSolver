@@ -49,6 +49,11 @@ def findPuzzleBoundary(img):
 
 
 def checkPuzzle(img):
+    img_h, img_w = img.shape
+    if img_h < 600 or img_w < 600:
+        writeStatus("error: Image or ROI to Small")
+        sys.exit("Error: Image too small")
+
     return img
 
 
@@ -153,6 +158,9 @@ def main():
 
     # Load Image #
     gray_img = cv2.imread(sys.argv[1], flags=cv2.IMREAD_GRAYSCALE)  # grayscale image
+    if not len(gray_img):
+        writeStatus("error: unable to open image")
+        sys.exit("error: unable to open image")
 
     # clip images to roi #
     roi_img = clipToROI(gray_img, roi)
