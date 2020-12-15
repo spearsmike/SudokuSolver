@@ -1,4 +1,4 @@
-CFLAGS=-c -lm -D SMART
+CFLAGS=-c -lm 
 
 C++: solver.c solver.h
 	g++ $(CFLAGS) solver.c
