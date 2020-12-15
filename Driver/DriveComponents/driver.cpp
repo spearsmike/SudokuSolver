@@ -143,6 +143,7 @@ void processImage(int argc, char* argv[]){
 int main(int argc, char* argv[]){
   if(argc < 3){
     cout << "Not enough arguments: run [executable] [imagename] [roi]\n";
+    return 0;
   }
   processImage(argc, argv);
 
