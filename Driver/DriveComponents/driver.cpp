@@ -1,5 +1,5 @@
 #include "driver.h"
-#include "Puzzle_Solver/solver.c"
+#include "../Puzzle_Solver/solver.c"
 #include <cstddef>
 #include <fstream>
 #include <iostream>
