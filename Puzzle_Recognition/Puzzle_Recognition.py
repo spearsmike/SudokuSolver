@@ -91,9 +91,10 @@ def warpPuzzle(img, contour):
 
 def readCells(img):
     # image processing #
+    img = cv2.resize(img, (2340, 2340), interpolation=cv2.INTER_CUBIC)
     img = cv2.medianBlur(img, 3)
     img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-    img = cv2.resize(img, (2000, 2000), interpolation=cv2.INTER_CUBIC)
+
     img_h, img_w = img.shape
     cell_height = (img_h // 9)
     cell_width = (img_w // 9)
@@ -103,7 +104,11 @@ def readCells(img):
         for j in range(9):
             cell_y = cell_height * i
             cell_x = cell_width * j
-            cell_img = img[cell_y+30:cell_y + cell_height-30, cell_x+30:cell_x+cell_width-30]
+            white_image = np.zeros((300, 300), np.uint8)  # create 300x300 image
+            white_image[:] = (255)  # make image white
+            cell_img = img[cell_y+30:cell_y + cell_height-30, cell_x+30:cell_x+cell_width-30]  # copy cell
+            white_image[50:250, 50:250] = cell_img  # paste cell in center of white image
+            cell_img = white_image
             cell_char = pytesseract.image_to_string(cell_img, config=custom_config)[0]
             if ord(cell_char) == 12:
                 cells[i][j] = '0'
