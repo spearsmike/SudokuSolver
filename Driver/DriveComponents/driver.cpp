@@ -54,7 +54,7 @@ bool imageIsValid(){
     getline(status,line);
     if(successMsg.compare(line) != 0){//scan for errorMsg in status file
       status.close();
-      cout << "Error, image is not valid, please try again." << endl;
+    //  cout << "Error, image is not valid, please try again." << endl;
       remove("status.txt");
       return false;
     }
@@ -125,9 +125,13 @@ void clearBoard(){
 /*
   run py script with args from stdin
 */
-void processImage(int argc, char* argv[]){
+bool processImage(int argc, char* argv[]){
   const char* procExecutable = "Puzzle_Recognition/Puzzle_Recognition.py";
   char* imageName = argv[1];
+  ifstream fileCheck(imageName);
+  if(!fileCheck.is_open()){
+    return false;
+  }
   char* roi = argv[2];
   int bufferSize = strlen(VERSION) + strlen(procExecutable) + strlen(imageName) + strlen(roi);
   char command[bufferSize];
@@ -139,13 +143,17 @@ void processImage(int argc, char* argv[]){
   strcat(command, " ");
   strcat(command, roi);
   system(command);
+  return true;
 }
 int main(int argc, char* argv[]){
   if(argc < 3){
     cout << "Not enough arguments: run [executable] [imagename] [roi]\n";
     return 0;
   }
-  processImage(argc, argv);
+  if(!processImage(argc, argv)){
+    cout << "Error, couldn't locate file. Verify path location and imagename.\n";
+    return 0;
+  }
 
   //check if valid and solve
   if(imageIsValid()){
@@ -181,7 +189,7 @@ int main(int argc, char* argv[]){
       break;
     }
     else if(answer == "n"){
-      cout << "Closing...";
+      cout << "Closing...\n";
       break;
     }
     else{

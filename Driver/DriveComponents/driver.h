@@ -8,6 +8,6 @@ bool solve();
 bool imageIsValid();
 bool constructPuzzle();
 void clearBoard();
-void processImage();
+bool processImage();
 
 #endif
