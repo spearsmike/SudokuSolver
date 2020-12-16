@@ -50,7 +50,7 @@ def findPuzzleBoundary(img):
 
 def checkPuzzle(img):
     img_h, img_w = img.shape
-    if img_h < 600 or img_w < 600:
+    if img_h < 300 or img_w < 300:
         writeStatus("error: Image or ROI to Small")
         sys.exit("Error: Image too small")
 
@@ -93,7 +93,7 @@ def readCells(img):
     # image processing #
     img = cv2.medianBlur(img, 3)
     img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-
+    img = cv2.resize(img, (2000, 2000), interpolation=cv2.INTER_CUBIC)
     img_h, img_w = img.shape
     cell_height = (img_h // 9)
     cell_width = (img_w // 9)
@@ -141,10 +141,11 @@ def main():
     roi = float(0.7)
 
     # check cmdline arguments #
-    if sys.argv[1] == "-h" or sys.argv[1] == "-help":
-        sys.exit("$ python Puzzle_Recognition image_name.jpg roi")
-    if len(sys.argv) > 3 and len(sys.argv < 2):
+    if len(sys.argv) > 3 or len(sys.argv) < 2:
         sys.exit("Error: incorrect number of arguments.\nFor help use -help")
+    if (sys.argv[1] == "-h" or sys.argv[1] == "-help"):
+        sys.exit("$ python Puzzle_Recognition image_name.jpg roi")
+
     file_type = sys.argv[1].split('.')[-1]
     if file_type != "png" and file_type != "jpg":
         sys.exit("Error: Incorrect file type. .jpg & .png only")
@@ -158,7 +159,7 @@ def main():
 
     # Load Image #
     gray_img = cv2.imread(sys.argv[1], flags=cv2.IMREAD_GRAYSCALE)  # grayscale image
-    if not len(gray_img):
+    if gray_img is None:
         writeStatus("error: unable to open image")
         sys.exit("error: unable to open image")
 
