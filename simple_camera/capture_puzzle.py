@@ -2,11 +2,10 @@ import cv2
 import sys
 
 
-roi_ratio = 0.70
+roi_ratio = 1
 if len(sys.argv) != 2:
     sys.exit("missing camera index, try 0,1 or 2\nex. $./capture 0")
-
-cap = cv2.VideoCapture(int(sys.argv[1]), cv2.CAP_DSHOW)  # select which camera to use
+cap = cv2.VideoCapture(int(sys.argv[1]), cv2.CAP_DSHOW)
 if not cap.isOpened():
     sys.exit("Error: Video Capture Not Opened")
 
@@ -36,6 +35,11 @@ while(cap.isOpened()):
         break
     if val == ord('c'):
         cv2.imwrite('capture.jpg', original_frame)  # press c to capture image
+        cv2.namedWindow('Capture', flags=(cv2.WINDOW_NORMAL + cv2.WINDOW_KEEPRATIO))
+        cv2.resizeWindow('Capture', 1280, 720)
+        cv2.imshow('Capture', original_frame)
+        cv2.waitKey(0)
+        cv2.destroyWindow('Capture')
 
 cap.release()
 cv2.destroyAllWindows()
