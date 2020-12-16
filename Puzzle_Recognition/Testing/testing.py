@@ -10,16 +10,9 @@ status_filename = "status.txt"
 
 def clipToROI(img, roi):
     img_h, img_w = img.shape
-    # roi_y = img_h//2 - roi//2
-    # roi_x = img_w//2 - roi//2
     roi_length = int(min(img.shape[0:2]) * roi)
     roi_y = (img_h // 2) - (roi_length // 2)
     roi_x = (img_w // 2) - (roi_length // 2)
-    # roi_y = int(img_h * verti_roi)  # height of image * percentage of verti_roi
-    # roi_x = int(img_w * horizi_roi)  # width of image * percentage of horizi_roi
-    # roi_h = img_h - (2 * roi_y)
-    # roi_w = img_w - (2 * roi_x)
-    # roi = (roi_h + roi_w) // 2
 
     return img[roi_y: roi_y + roi_length, roi_x: roi_x + roi_length]
 
@@ -60,8 +53,8 @@ def is_floatstring(s):
 def readCells(img):
     img = cv2.resize(img, (2340, 2340), interpolation=cv2.INTER_CUBIC)
     img = cv2.medianBlur(img, 3)
-    img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-
+    #img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    img = cv2.threshold(img, 100, 255, cv2.THRESH_BINARY)[1]
     cv2.imwrite("readcells.jpg", img)
     img_h, img_w = img.shape
     cell_height = (img_h // 9)
@@ -142,14 +135,11 @@ def main():
     roi_img = clipToROI(gray_img, roi)
     cv2.imwrite("roi.jpg", roi_img)
     # Image Processing #
-    # blur = cv2.GaussianBlur(roi_img.copy(), (3, 3), 0)  # remove noise from image
-    blur = cv2.medianBlur(roi_img.copy(), 3)
-    # histr = cv2.calcHist([blur], [0], None, [256], [0, 256])
-    # plt.plot(histr, color='b')
-    # plt.xlim([0, 256])
-    # plt.show()
-    thresh = cv2.threshold(blur.copy(), 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]  # keep only dark lines
-
+    blur = cv2.GaussianBlur(roi_img.copy(), (5, 5), 0)  # remove noise from image
+    #blur = cv2.medianBlur(roi_img.copy(), 3)
+    # thresh = cv2.threshold(blur.copy(), 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]  # keep only dark lines
+    thresh = cv2.threshold(blur.copy(), 100, 255, cv2.THRESH_BINARY_INV)[1]
+    cv2.imwrite("contours_threshold.jpg", thresh)
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     contour = sorted(contours, key=cv2.contourArea, reverse=True)[0]
 
@@ -195,24 +185,16 @@ def main():
     pts1 = np.float32([top_left_corner, bottom_left_corner, bottom_right_corner, top_right_corner])
     pts2 = np.float32([[0, 0], [0, img_h], [img_w, img_h], [img_w, 0]])
     M = cv2.getPerspectiveTransform(pts1, pts2)
+
     puzzle_img = cv2.warpPerspective(roi_img.copy(), M, (img_w, img_h))
     cv2.imwrite("puzzle.jpg", puzzle_img)
+
     # Read cells of puzzle #
     puzzle_cell_numbers = readCells(puzzle_img)
 
     # write puzzle to csv file #
     writeResultToFile(puzzle_cell_numbers)
-    # writeStatus("success")
-    # final_img = cv2.drawContours(roi_img, [boundary], -1, (255, 255, 255), 3)  # draw the puzzle border
-    # testing purposes
-    # cv2.namedWindow("roi_img", flags=(cv2.WINDOW_NORMAL + cv2.WINDOW_KEEPRATIO))
-    # cv2.resizeWindow("roi_img", 500, 500)
-    # cv2.imshow("roi_img", test_img)  # open image in a window
-    # cv2.namedWindow("puzzle_img", flags=(cv2.WINDOW_NORMAL + cv2.WINDOW_KEEPRATIO))
-    # cv2.resizeWindow("puzzle_img", 500, 500)
-    # cv2.imshow("puzzle_img", puzzle_img)  # open image in a window
-    # cv2.waitKey(0)  # wait for a key press
-    # cv2.destroyAllWindows()  # close window
+    writeStatus("success")
     return
 
 

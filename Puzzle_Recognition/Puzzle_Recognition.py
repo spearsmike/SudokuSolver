@@ -29,8 +29,9 @@ def is_floatstring(s):
 
 def findPuzzleBoundary(img):
     # Image Processing #
-    blur_img = cv2.GaussianBlur(img.copy(), (3, 3), 0)  # remove noise from image
-    thresh = cv2.threshold(blur_img.copy(), 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]  # keep only dark lines
+    blur_img = cv2.GaussianBlur(img.copy(), (5, 5), 0)  # remove noise from image
+    thresh = cv2.threshold(blur_img.copy(), 100, 255, cv2.THRESH_BINARY_INV)[1]
+    # thresh = cv2.threshold(blur_img.copy(), 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]  # keep only dark lines
     # Aproximating location of lines #
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     sorted_contours = sorted(contours, key=cv2.contourArea, reverse=True)
@@ -92,9 +93,9 @@ def warpPuzzle(img, contour):
 def readCells(img):
     # image processing #
     img = cv2.resize(img, (2340, 2340), interpolation=cv2.INTER_CUBIC)
-    img = cv2.medianBlur(img, 3)
-    img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-
+    img = cv2.medianBlur(img, 5)
+    #img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    img = cv2.threshold(img, 100, 255, cv2.THRESH_BINARY)[1]
     img_h, img_w = img.shape
     cell_height = (img_h // 9)
     cell_width = (img_w // 9)
