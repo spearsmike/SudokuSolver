@@ -8,7 +8,7 @@ export PATH=$CXXTEST/bin:$PATH
 cxxtestgen --error-printer -o runner.cpp Tests.h
 
 # compile runner.cpp
-g++ -o runner -I$CXXTEST runner.cpp ../sudoku.o
+g++ -o runner -I$CXXTEST runner.cpp ../solver.o
 
 # run the test runner
 ./runner

@@ -1,7 +1,3 @@
-// #ifndef N
-// #define N 9
-// #endif
-
 #ifdef C
 enum bool {false, true};
 typedef size_t bool;
